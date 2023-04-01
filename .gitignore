@@ -146,3 +146,5 @@ dmypy.json
 
 # notebooks outside version control 
 notebooks/local
+
+notebooks/naming/data/
