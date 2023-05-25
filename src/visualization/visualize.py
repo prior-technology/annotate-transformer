@@ -7,6 +7,24 @@ def text_to_input_ids(tokenizer, text):
     toks = tokenizer.encode(text)
     return torch.as_tensor(toks).view(1, -1).cuda()
 
+def violin(vectors, names):
+    """
+    Generate a violin plot using plotly express. Vectors is a list of vectors, names is a list of strings to label the vectors.
+    """
+    import plotly.express as px
+    import pandas as pd
+    df = pd.DataFrame()
+    for i, v in enumerate(vectors):
+        df[names[i]] = v
+    fig = px.violin(df, box=True, points="all")
+    fig.show()
+
+def unwrap(attn_scores):
+    """
+    attn_scores is a tensor with shape torch.Size([1, n, 1, 1])
+    this returns a tensor with shape torch.Size([n])
+    """
+    return attn_scores.squeeze(0).squeeze(1).squeeze(1)
 
 def plot_attribution_against_token(attr, labels):
     """
